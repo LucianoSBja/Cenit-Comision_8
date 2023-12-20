@@ -1,0 +1,26 @@
+{% extends 'base.html' %} {% load static %} {% block contenido %}
+<div
+  class="d-flex flex-column align-items-center container mt-4 mb-4 border rounded-1 border-light-subtle"
+>
+  <h2 class="mb-4 mt-3">FORMULARIO DE CONTACTO</h2>
+  <form
+    method="post"
+    action="{% url 'contacto:contacto' %}"
+    class="needs-validation"
+    novalidate
+    class="row g-3"
+  >
+    {% csrf_token %} {% for field in form %}
+    <div class="mb-3 col-md-6">
+      {{ field.label_tag }} {{ field }} {% if field.help_text %}
+      <small class="form-text text-muted">{{ field.help_text }}</small>
+      {% endif %}
+      <div class="invalid-feedback">{{ field.errors }}</div>
+    </div>
+    {% endfor %}
+    <button type="submit" class="btn btn-primary col-md-6 mb-3">
+      Send Message
+    </button>
+  </form>
+</div>
+{% endblock contenido %}

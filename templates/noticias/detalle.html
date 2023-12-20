@@ -1,35 +1,98 @@
-{% extends 'base.html' %}
-{% load static %}
+{% extends 'base.html' %} {% load static %} {% block contenido %}
+<div class="container mt-5">
+  <article class="card mb-4">
+    <div class="card-body">
+      <h1 class="card-title">{{ noticia.titulo }}</h1>
+      <img
+        src="{{ noticia.imagen.url }}"
+        class="img-fluid mb-4"
+        alt="{{ noticia.titulo }}"
+      />
 
-{% block titulo %}NOTICIAS{% endblock titulo %}
+      <div class="metadata mb-4">
+        <p><strong>FECHA:</strong> {{ noticia.creado }}</p>
+        <p><strong>CATEGORIA:</strong> {{ noticia.categoria_noticia }}</p>
+      </div>
 
+      <p class="card-text">{{ noticia.cuerpo }}</p>
 
-{% block contenido %}
-	<h1>ACA VOY A DETALLAR UNA NOTICIA</h1>
-		<img src="{{noticia.imagen.url}}" width="500" height="500">
-		
-		<p>TITULO: {{noticia.titulo}}</p>
-		
-		<p>FECHA: {{noticia.fecha}}</p>
-		<p>CATEGORIA: {{noticia.categoria_noticia}}</p>
-		<p>CUERPO: {{noticia.cuerpo}}</p>
-		<br><br>
-		<br>
-		<form method="POST" action="{% url 'noticias:comentar' %}">{% csrf_token %}
-			<textarea name="comentario" maxlength="1500"> </textarea>
-			<input type="text" name="id_noticia" value="{{noticia.pk}}" hidden=""> 
-			<input type="submit" value="GUARDAR">
-		</form>
-		<br><br><br>
-		<h3>COMENTARIOS</h3>
-		{% for com in comentarios %}
-		{% if user == com.usuario %}
-			<a href="">borrar</a>
-		{% endif %}
-		<strong>FECHA:{{com.fecha}}</strong><br>
-		<strong>USUARIO:{{com.usuario}}</strong><br>
-		<p>{{com.texto}}</p>
-		{% endfor %}
-		<a href="{% url 'noticias:listar' %}">VOLVER</a>
+      <div class="card-footer">
+        <p><strong>Creado:</strong> {{ noticia.creado }}</p>
+        <p><strong>Editado:</strong> {{ noticia.modificado }}</p>
+
+        {% if user.is_staff %}
+        <a
+          href="{% url 'noticias:noticia_editar' pk=noticia.pk %}"
+          class="btn btn-outline-primary"
+          >Editar</a
+        >
+        <a
+          href="{% url 'noticias:noticia_borrar' pk=noticia.pk %}"
+          class="btn btn-outline-danger"
+          >Borrar</a
+        >
+        {% endif %}
+      </div>
+    </div>
+  </article>
+
+  <section class="comments mt-4">
+    <h3>COMENTARIOS</h3>
+
+    {% for com in comentarios %}
+    <div class="comment card mb-2">
+      <div class="card-body">
+        <p class="card-text">
+          <strong>FECHA:</strong> {{ com.fecha }} - Modif {{ com.modificado }} -
+          <strong>Usuario:</strong> {{ com.usuario }}
+        </p>
+        <p class="card-text"><strong>- {{ com.texto }} -</strong></p>
+
+        {% if user == com.usuario or user.is_staff %}
+        <div class="btn-group">
+          <a
+            href="{% url 'noticias:comentario_editar' pk=com.pk %}"
+            class="btn btn-sm btn-outline-primary"
+            >Editar</a
+          >
+          <a
+            href="{% url 'noticias:comentario_borrar' pk=com.pk %}"
+            class="btn btn-sm btn-outline-danger"
+            >Borrar</a
+          >
+        </div>
+        {% endif %}
+      </div>
+    </div>
+    {% endfor %}
+
+    <div class="add-comment mt-4">
+      {% if user.is_authenticated %}
+      <form method="POST" action="{% url 'noticias:comentar' %}">
+        {% csrf_token %}
+        <div class="form-group">
+          <textarea
+            name="comentario"
+            maxlength="1500"
+            class="form-control"
+            placeholder="Escribe tu comentario"
+          ></textarea>
+        </div>
+        <input type="text" name="id_noticia" value="{{ noticia.pk }}" hidden />
+        <button type="submit" class="btn btn-primary">
+          Guardar Comentario
+        </button>
+      </form>
+      {% else %}
+      <div class="alert alert-info" role="alert">
+        Para comentar, debes iniciar sesión como usuario.
+      </div>
+      {% endif %}
+    </div>
+  </section>
+
+  <div class="back-button mt-4">
+    <a href="{% url 'home' %}" class="btn btn-secondary">Volver</a>
+  </div>
+</div>
 {% endblock contenido %}
-

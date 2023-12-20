@@ -1,5 +1,4 @@
-from .base import *
-
+from .settings import *
 
 DEBUG = True
 
@@ -11,3 +10,13 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
+""" DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'blogdb',
+        'USER': 'root',
+        'PASSWORD': 'Luis0014664',
+        'HOST': 'localhost',
+        'PORT': '3306',
+    }
+} """

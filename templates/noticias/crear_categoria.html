@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block contenido %}
+<h1> NUEVA CATEGORIA CLASS</h1>
+
+<form action="{% url 'noticias:categoria_crear' %}" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{form.as_p}}
+    <button type="submit"> GRABAR </button>
+   
+
+-->
+{% endblock %}

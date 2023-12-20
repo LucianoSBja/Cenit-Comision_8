@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menú de Orden</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 50px;
+        }
+
+        select {
+            padding: 10px;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+    <label for="orden">Selecciona el orden:</label>
+    <select id="orden" onchange="aplicarOrden()">
+        <option value="categoria">Por Categoria</option>
+        <option value="ascendente">A..Z Alfabetico</option>
+        <option value="descendente">Z..A Alfabetico</option>
+        <option value="reciente">Mas Reciente</option>
+        <option value="masviejo">Más antiguo</option>
+    </select>
+
+    <script>
+        function aplicarOrden() {
+            var seleccion = document.getElementById("orden").value;
+            // Aquí puedes agregar la lógica para manejar la selección
+            console.log("Orden seleccionado: " + seleccion);
+        }
+    </script>
+</body>
+</html>

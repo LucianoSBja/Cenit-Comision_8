@@ -16,11 +16,13 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from . import views
+#from .views import Vw_HomePageView
 #URL LOGIN
 from django.contrib.auth import views as auth
 
 from django.conf import settings
 from django.conf.urls.static import static
+from apps.noticias.views import *
 
 urlpatterns = [
 
@@ -28,16 +30,26 @@ urlpatterns = [
     # 1 PARAMETROS ES EL TEXTO DE LA URL
     # 2 LA VISTA QUE VA EJECUTAR
     # 3 ES EL NOMBRE LA URL (aun no lo usamos)
-    path('', views.Home, name = 'home'),
-    #No necesariamente estos 3 valores (parametors) se deben llamar igual
-    path('Nosotros/', views.Nosotros, name = 'nosotros'),
 
+    path('', Vw_Muestra_Noticias.as_view(), name ="home"),
+    path('Nosotros/', views.Nosotros, name = 'nosotros'),
+    path('test/', views.test, name = 'test'),
+    
     #LOGIN
     path('login/',auth.LoginView.as_view(template_name='usuarios/login.html'),name='login'),
-    path('logout/',auth.LogoutView.as_view(),name="logout"),
+    path('logout/',auth.LogoutView.as_view(template_name='usuarios/logout.html'),name="logout"),
 
     # URL DE APLICACION
     path('Noticias/', include('apps.noticias.urls')),
-    path('Usuario/',include('apps.usuarios.urls')),
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    path('Usuario/', include('apps.usuarios.urls')),
+    path('Contacto/', include('apps.contacto.urls')),
+    #PAGINA FILTRADO POR FECHA
+    #path('fechas/<int:month_id>/<int:year_id>', fechas, name='fechas'),
+   
+
+]
+
+#URL para rutas estaticas solo cuando esta en modo debug 
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

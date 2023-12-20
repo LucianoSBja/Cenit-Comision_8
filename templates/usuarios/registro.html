@@ -1,16 +1,31 @@
-{% extends 'base.html' %}
-{% load static %}
-{% block title %}Registro{% endblock %}
-{% block contenido %}
+{% extends 'base.html' %} {% load static %} {% block contenido %}
 
 <main role="main">
-  <div class="container">
-    <div class="row mt-3">
-      <div class="col-md-9 mx-auto mb-5">
-        <form action="" method="post">{% csrf_token %}         
-         <h3 class="mb-4">Registro</h3>
-          {{form.as_p}}
-          <p><input type="submit" class="btn btn-primary btn-block" value="Confirmar"></p>
+  <div class="container mt-5 mb-4">
+    <div class="row">
+      <div class="col-md-8 mx-auto">
+        <form
+          action=""
+          method="post"
+          class="needs-validation border p-4"
+          novalidate
+        >
+          {% csrf_token %}
+
+          <h3 class="mb-4">Registro</h3>
+
+          {% for field in form %}
+          <div class="mb-3">
+            {{ field.label_tag }} {{ field }} {% if field.help_text %}
+            <small class="form-text text-muted">{{ field.help_text }}</small>
+            {% endif %}
+            <div class="invalid-feedback">{{ field.errors }}</div>
+          </div>
+          {% endfor %}
+
+          <button type="submit" class="btn btn-primary btn-block">
+            Confirmar
+          </button>
         </form>
       </div>
     </div>

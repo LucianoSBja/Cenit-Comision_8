@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block titulo %}LISTADO DE CATEGORIAS{% endblock titulo %}
+
+{% block contenido %}
+{% for cate in object_list %}
+	{% if cate %}
+	<h2> {{ cate.nombre }}  </h2> <a href="{% url 'noticias:categoria_editar' pk=cate.pk %}">EDITAR</a> <a href="{% url 'noticias:categoria_borrar' pk=cate.pk %}">BORRAR</a>
+	
+	{% else %}
+	<h2> No hay categorias  </h2>
+	{% endif %}
+
+{% endfor %}
+<hr>
+<br><br><br>
+</h2> <a href="{% url 'noticias:categoria_crear' %}">CREAR</a>
+{% endblock contenido %}

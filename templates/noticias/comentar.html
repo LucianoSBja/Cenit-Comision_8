@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block titulo %}COMENTAR NOTICIA{% endblock titulo %}
+
+{% block contenido %}
+	<h2>EDITANDO COMENTARIO {{ comentario.texto }}</h2>
+	<form method="post" enctype="multipart/form-data">
+		{% csrf_token %}
+		{{ form.as_p }}
+		<button type="submit">Guardar cambios</button>
+	  </form>
+	  <a href="{% url 'noticias:detalle' pk=comentario.noticia.pk %}">Cancelar</a>
+{% endblock contenido %}
