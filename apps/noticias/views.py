@@ -14,29 +14,33 @@ from .forms import frm_Noticia, frm_Comentario
 
 #  ************  VISTAS SIN REQUERIR LOGIN******************
 
-#VISTA DE MI HOME. MUESTRA TODAS LAS NOTICIAS
+#VISTA DE MI HOME. MUESTRA TODAS LAS NOTICIAS ORDENADAS POR MAS RECIENTES
 class Vw_Muestra_Noticias(ListView):
 	model = Noticia
 	paginate_by = 5 #PAGINO CADA n NOTICIAS
 	template_name = 'home.html'
 
+#VISTA DE MI HOME. MUESTRA TODAS LAS NOTICIAS ORDENADAS POR CATEGORIA
 class Vw_ordenoporcategoria(ListView):
 	model = Noticia
 	paginate_by = 5 #PAGINO CADA n NOTICIAS
 	ordering=['categoria_noticia']
 	template_name = 'home.html'
+#VISTA DE MI HOME. MUESTRA TODAS LAS NOTICIAS ORDENADAS POR ORDEN ALFABETIDO DE TITULO ASC
 class Vw_ordenoportitulo(ListView):
 	model = Noticia
 	paginate_by = 5 #PAGINO CADA n NOTICIAS
 	ordering=['titulo']
 	template_name = 'home.html'
 
+#VISTA DE MI HOME. MUESTRA TODAS LAS NOTICIAS ORDENADAS POR ORDEN ALFABETIDO DE TITULO DES
 class Vw_ordenoportitulo_des(ListView):
 	model = Noticia
 	paginate_by = 5 #PAGINO CADA n NOTICIAS
 	ordering=['-titulo']
 	template_name = 'home.html'
-
+ 
+#VISTA DE MI HOME. MUESTRA TODAS LAS NOTICIAS ORDENADAS POR FECHA DE CREACION ASC
 class Vw_ordenoporcreado(ListView):
 	model = Noticia
 	paginate_by = 5 #PAGINO CADA n NOTICIAS
@@ -44,7 +48,6 @@ class Vw_ordenoporcreado(ListView):
 	template_name = 'home.html' 
  
 #MUESTRO UNA NOTICIA CON SUS COMENTARIOS
-#@login_required
 def Detalle_Noticias(request, pk):
 	noti = Noticia.objects.get(pk = pk) #RETORNA SOLO UN OBEJTO
 	cmt = Comentario.objects.filter(noticia = noti) #FILTRO COMENTARIOS DE ESE ID DE NOTICIA
@@ -60,7 +63,7 @@ def porcategoria(request, pk):
 #  ************  VISTAS QUE REQUIEREN LOGIN******************
 
 #VISTA PARA CREAR UNA NOTICIA
-@method_decorator(login_required, name='dispatch') #decorador controla login en Vistas basadas en Clases
+@method_decorator(login_required, name='dispatch') #decorador que controla login en Vistas basadas en Clases
 class Vw_Nueva_noticia(CreateView):
 	model = Noticia
 	Noticia.modificado = Noticia.creado
@@ -70,7 +73,7 @@ class Vw_Nueva_noticia(CreateView):
 	success_url = reverse_lazy('home') 
  
 #VISTA PARA COMENTAR UNA NOTICIA
-@login_required
+@login_required #DECORADOR QUE CONTROLA LOGIN
 def Comentar_Noticia(request):
     
 	com = request.POST.get('comentario',None)
@@ -81,7 +84,7 @@ def Comentar_Noticia(request):
  
 	return redirect(reverse_lazy('noticias:detalle', kwargs={'pk': noti}))
 
-@method_decorator(login_required, name='dispatch') #decorador controla login en Vistas basadas en Clases
+@method_decorator(login_required, name='dispatch') #decorador que controla login en Vistas basadas en Clases
 class Vw_Borra_Comentario(DeleteView):
 	model = Comentario	
 	template_name = "noticias/confirmar_elimina_comentario.html"
@@ -92,7 +95,7 @@ class Vw_Borra_Comentario(DeleteView):
       # Redirige a la vista de detalles de la publicación después de eliminar el comentario
 		return reverse_lazy('noticias:detalle', kwargs={'pk': self.object.noticia.pk})
 
-@method_decorator(login_required, name='dispatch') #decorador controla login en Vistas basadas en Clases
+@method_decorator(login_required, name='dispatch') #decorador que controla login en Vistas basadas en Clases
 class Vw_Edita_Comentario(UpdateView):
 	model = Comentario
 	fields = ['texto']
@@ -110,7 +113,7 @@ class Vw_Edita_Comentario(UpdateView):
       # Redirige a la vista de detalles de la publicación después de eliminar el comentario
 		return reverse_lazy('noticias:detalle', kwargs={'pk': self.object.noticia.pk})
 
-@method_decorator(login_required, name='dispatch') #decorador controla login en Vistas basadas en Clases
+@method_decorator(login_required, name='dispatch') #decorador que controla login en Vistas basadas en Clases
 class Vw_Edita_Noticia(UpdateView):
 	model = Noticia
 	fields = ['titulo', 'cuerpo', 'imagen', 'categoria_noticia']
@@ -128,31 +131,31 @@ class Vw_Edita_Noticia(UpdateView):
       # Redirige a la vista de detalles de la publicación después de eliminar el comentario
 		return reverse_lazy('noticias:detalle', kwargs={'pk': self.object.noticia.pk})
 
-@method_decorator(login_required, name='dispatch') #decorador controla login en Vistas basadas en Clases
+@method_decorator(login_required, name='dispatch') #decorador que controla login en Vistas basadas en Clases
 class Vw_Borra_Noticia(DeleteView):
 	model = Noticia	
 	template_name = "noticias/confirmar_elimina_noticia.html"
 	success_url = reverse_lazy('home')
  
-@method_decorator(login_required, name='dispatch') #decorador controla login en Vistas basadas en Clases
+@method_decorator(login_required, name='dispatch') #decorador que controla login en Vistas basadas en Clases
 class Vw_Muestra_Categorias(ListView):
 	model = Categoria
 	template_name = 'noticias/categorias.html'
 
-@method_decorator(login_required, name='dispatch') #decorador controla login en Vistas basadas en Clases
+@method_decorator(login_required, name='dispatch') #decorador que controla login en Vistas basadas en Clases
 class Vw_Borra_Categoria(DeleteView):
 	model = Categoria
 	template_name = "noticias/confirmar_elimina_categoria.html"
 	success_url = reverse_lazy('noticias:categorias')
  
-@method_decorator(login_required, name='dispatch') #decorador controla login en Vistas basadas en Clases
+@method_decorator(login_required, name='dispatch') #decorador que controla login en Vistas basadas en Clases
 class Vw_Edita_Categoria(UpdateView):
 	model = Categoria
 	fields = ['nombre']
 	template_name = "noticias/editar_categoria.html"
 	success_url = reverse_lazy('noticias:categorias')
  
-@method_decorator(login_required, name='dispatch') #decorador controla login en Vistas basadas en Clases
+@method_decorator(login_required, name='dispatch') #decorador que controla login en Vistas basadas en Clases
 class Vw_Nueva_Categoria(CreateView):
 	model = Categoria
 	fields = ['nombre']

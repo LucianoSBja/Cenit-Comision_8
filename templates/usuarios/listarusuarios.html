@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+
+{% block titulo %}
+LISTA DE USUARIOS REGISTRADOS
+{% endblock titulo %}
+
+{% block contenido %}
+<div>
+	<strong> LISTADO DE USUARIOS</strong>
+</div>
+
+{% for usuario in object_list %}
+    
+					<strong> {{ usuario.username }}</strong>
+					{{ usuario.firstname }}
+					{{ usuario.lastname }}
+					{{ usuario.email }}
+					<a href="{% url 'usuarios:editausuario' usuario.id %}"> Editar </a>
+					<a href="{% url 'usuarios:borrausuario' usuario.id %}"> Borrar </a>
+					<hr>
+	  
+{% endfor %}
+<hr>
+<nav aria-label="...">
+  <ul class="pagination justify-content-center">
+        {% if page_obj.has_previous %}
+		<li class="page-item">
+            <a class="page-link" href="?page=1">&laquo; INICIO</a>
+		</li>
+		<li class="page-item">
+            <a class="page-link" href="?page={{ page_obj.previous_page_number }}">ANTERIOR</a>
+		</li>
+        {% endif %}
+        <span class="page-link">
+            Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+        </span>
+        {% if page_obj.has_next %}
+		<li class="page-item">
+            <a class="page-link" href="?page={{ page_obj.next_page_number }}">SIGUIENTE</a>
+		</li>
+		<li class="page-item">
+            <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">ULTIMO &raquo;</a>
+		</li>
+        {% endif %}
+   	</ul>
+</nav>
+<hr>
+{% endblock %}

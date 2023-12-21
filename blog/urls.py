@@ -18,11 +18,13 @@ from django.urls import path, include
 from . import views
 #from .views import Vw_HomePageView
 #URL LOGIN
-from django.contrib.auth import views as auth
+
 
 from django.conf import settings
 from django.conf.urls.static import static
 from apps.noticias.views import *
+from apps.usuarios.views import *
+from apps.contacto.views import *
 
 urlpatterns = [
 
@@ -36,16 +38,19 @@ urlpatterns = [
     path('test/', views.test, name = 'test'),
     
     #LOGIN
-    path('login/',auth.LoginView.as_view(template_name='usuarios/login.html'),name='login'),
+    path('login/', LoginUsuario.as_view(), name='login'),
+    path('password_reset/', auth.PasswordResetView.as_view(), name='password_reset'),
+    path('password_reset/done/', auth.PasswordResetDoneView.as_view(), name='password_reset_done'),
+    path('reset/<uidb64>/<token>/', auth.PasswordResetConfirmView.as_view(), name='password_reset_confirm'),
+    path('reset/done/', auth.PasswordResetCompleteView.as_view(), name='password_reset_complete'),
+    #path('login/',auth.LoginView.as_view(template_name='usuarios/login.html'),name='login'),
     path('logout/',auth.LogoutView.as_view(template_name='usuarios/logout.html'),name="logout"),
 
     # URL DE APLICACION
     path('Noticias/', include('apps.noticias.urls')),
     path('Usuario/', include('apps.usuarios.urls')),
     path('Contacto/', include('apps.contacto.urls')),
-    #PAGINA FILTRADO POR FECHA
-    #path('fechas/<int:month_id>/<int:year_id>', fechas, name='fechas'),
-   
+    
 
 ]
 
