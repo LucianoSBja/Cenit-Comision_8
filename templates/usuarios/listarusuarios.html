@@ -19,7 +19,7 @@ LISTA DE USUARIOS REGISTRADOS
 					{{ usuario.lastname }}
 					{{ usuario.email }}
 					<a href="{% url 'usuarios:editausuario' usuario.id %}"> Editar </a>
-					<a href="{% url 'usuarios:borrausuario' usuario.id %}"> Borrar </a>
+					<a href="{% url 'usuarios:borrarusuario' usuario.id %}"> Borrar </a>
 					<hr>
 	  
 {% endfor %}
