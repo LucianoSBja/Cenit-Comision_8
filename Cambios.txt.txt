@@ -1,0 +1,6 @@
+- en login.html agregue una referencia para resetear contraseña
+- en base.html agregue opciones de editar usuarios, editar perfil, y que salude al invitado
+-agregue updateperfil.html   esta en texto plano
+-agregue updateusuario.html  esta en texto plano
+-agregue confirmar_elimina_usuario.html   esta en tecto plano
+

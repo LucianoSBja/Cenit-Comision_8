@@ -1,7 +1,15 @@
 {% extends 'base.html' %} {% load static %} {% block contenido %}
+
+<div class="messages">
+	{% for message in messages %}
+	<table {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}
+</table>
+	{% endfor %}
+</div>
+
 <div class="container mt-5 mb-4 d-flex justify-content-center border">
   <form method="POST">
-    {% csrf_token %} {{ form.errors }}
+    {% csrf_token %}
     <h3 class="mb-4 mt-3">Loging</h3>
     <div class="mb-3">
       <label for="username" class="form-label">Usuario</label>
@@ -24,6 +32,8 @@
         placeholder="Contraseña"
       />
     </div>
+
+    <a href="{% url 'password_reset' %}">Resetear Contraseña</a>
 
     <button type="submit" class="btn btn-primary mb-4">Enviar</button>
   </form>

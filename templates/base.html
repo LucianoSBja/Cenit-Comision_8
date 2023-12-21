@@ -99,13 +99,20 @@
                 href="{% url 'noticias:categorias' %}"
                 >Editar Categorias</a
               >
+              <a
+			  class="nav-link"
+                href="{% url 'usuarios:listarusuarios' %}"
+                >Editar Usuarios</a
+              >
               {% endif %}
             </a>
             {% if user.is_authenticated %}
-            <strong>Hola {{ user.username }}</strong>
+            <strong class="p-4 mb-3 bg-light">Bienvenido {{ user.username }}</strong>
+            <a   class="btn btn-outline-primary ms-2" href="{% url 'usuarios:editaperfil' user.id %}">EDITAR PERFIL</a>
             <a   class="btn btn-outline-primary ms-2" href="{% url 'logout' %}">LOGOUT</a>
             {% else %}
-            <a   class="btn btn-outline-primary ms-2 " href="{% url 'login' %}">LOGIN</a>
+            <strong class="p-4 mb-3 bg-light">Usuario Invitado</strong>
+            <a   class="btn btn-outline-primary ms-2" href="{% url 'login' %}">LOGIN</a>
             <a   class="btn btn-outline-primary ms-2" href="{% url 'usuarios:registro' %}"
               >Registrar</a
             >
@@ -141,16 +148,6 @@
             </div>
           </aside>
 
-              <!--<div class="p-4">
-					<h4 class="fst-italic">ORDENADO</h4>
-					<ol class="list-unstyled mb-0">
-					  <li>
-						<a href="{% url 'noticias:ordenoportitulo' %}">A..Z Alfabetico</a>
-						<a href="{% url 'noticias:ordenoportitulo_des' %}">Z..A Alfabetico</a>
-						<a href="{% url 'home' %}">Mas Reciente</a>
-						<a href="{% url 'noticias:ordenoporcreado' %}">Más antiguo</a>
-					</ol>
-				</div>-->
             </div>
           </aside>
         </section>
