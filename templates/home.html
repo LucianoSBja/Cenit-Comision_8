@@ -1,65 +1,71 @@
 {% extends 'base.html' %} {% load static %} {% block contenido %}
-<h2 class="mb-4">Últimas Noticias</h2>
+<div class="container mt-4">
+  <h2 class="mb-4">Últimas Noticias</h2>
 
-{% for noti in object_list %}
-<div class="card mb-3 custom-card">
-  <div class="row g-0">
-    <div class="col-md-5">
-      <img
-        src="{{ noti.imagen.url }}"
-        class="img-fluid rounded-start"
-        alt="..."
-        width="300"
-      />
-    </div>
-    <div class="col-md-7">
-      <div class="card-body">
-        <strong class="d-inline-block mb-2 text-primary"
-          >{{ noti.categoria_noticia }}</strong
-        >
-        <h4 class="mb-0">{{ noti.titulo }}</h4>
-        <div class="mb-1 text-muted">{{ noti.creado|date:"d M Y" }}</div>
-        <p class="card-text mb-auto">{{ noti.cuerpo}}</p>
-        <a href="{% url 'noticias:detalle' noti.id %}" class="btn btn-primary"
-          >Leer más</a
-        >
+  {% block lista_noticias %} {% for noti in object_list %}
+  <div class="card mb-3 noticia-card">
+    <div class="row g-0">
+      <div class="col-md-5">
+        <img
+          src="{{ noti.imagen.url }}"
+          class="img-fluid rounded-start"
+          alt="..."
+          width="300"
+        />
+      </div>
+      <div class="col-md-7">
+        <div class="card-body">
+          <strong class="d-inline-block mb-2 text-primary"
+            >{{ noti.categoria_noticia }}</strong
+          >
+          <h4 class="mb-0">{{ noti.titulo }}</h4>
+          <div class="mb-1 text-muted">{{ noti.creado|date:"d M Y" }}</div>
+          <p class="card-text mb-auto lh-base text-break">{{ noti.cuerpo }}</p>
+          <a
+            href="{% url 'noticias:detalle' noti.id %}"
+            class="btn btn-primary mt-4"
+            >Leer más</a
+          >
+        </div>
       </div>
     </div>
   </div>
+  {% endfor %} {% endblock %}
+
+  <hr />
+
+  {% block paginacion %}
+  <nav aria-label="...">
+    <ul class="pagination justify-content-center custom-pagination">
+      {% if page_obj.has_previous %}
+      <li class="page-item">
+        <a class="page-link" href="?page=1">&laquo; INICIO</a>
+      </li>
+      <li class="page-item">
+        <a class="page-link" href="?page={{ page_obj.previous_page_number }}"
+          >ANTERIOR</a
+        >
+      </li>
+      {% endif %}
+
+      <span class="page-link">
+        Página {{ page_obj.number }} de {{ page_obj.paginator.num_pages }}.
+      </span>
+
+      {% if page_obj.has_next %}
+      <li class="page-item">
+        <a class="page-link" href="?page={{ page_obj.next_page_number }}"
+          >SIGUIENTE</a
+        >
+      </li>
+      <li class="page-item">
+        <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}"
+          >ULTIMO &raquo;</a
+        >
+      </li>
+      {% endif %}
+    </ul>
+  </nav>
+  {% endblock %}
 </div>
-{% endfor %}
-
-<hr />
-
-<nav aria-label="...">
-  <ul class="pagination justify-content-center custom-pagination">
-    {% if page_obj.has_previous %}
-    <li class="page-item">
-      <a class="page-link" href="?page=1">&laquo; INICIO</a>
-    </li>
-    <li class="page-item">
-      <a class="page-link" href="?page={{ page_obj.previous_page_number }}"
-        >ANTERIOR</a
-      >
-    </li>
-    {% endif %}
-
-    <span class="page-link">
-      Página {{ page_obj.number }} de {{ page_obj.paginator.num_pages }}.
-    </span>
-
-    {% if page_obj.has_next %}
-    <li class="page-item">
-      <a class="page-link" href="?page={{ page_obj.next_page_number }}"
-        >SIGUIENTE</a
-      >
-    </li>
-    <li class="page-item">
-      <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}"
-        >ULTIMO &raquo;</a
-      >
-    </li>
-    {% endif %}
-  </ul>
-</nav>
 {% endblock %}

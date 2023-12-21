@@ -1,11 +1,28 @@
-{% extends "base.html" %}
+{% extends "base.html" %} {% block contenido %}
+<div class="container mt-4">
+  <div class="card">
+    <div class="card-body">
+      <h1 class="card-title mb-4">Confirmar Eliminación</h1>
 
-{% block contenido %}
-  <h1>Confirmar Eliminación</h1>
-  <p>¿Estás seguro de que deseas eliminar "{{ comentario.texto }}"?</p>
-  <form method="post">
-    {% csrf_token %}
-    <input type="submit" value="Sí, eliminar">
-  </form>
-  <a href="{% url 'noticias:detalle' pk=comentario.noticia.pk %}">Cancelar</a>
+      <p class="card-text lead">
+        ¿Estás seguro de que deseas eliminar "
+        <strong>{{ comentario.texto }}</strong>"?
+      </p>
+
+      <form method="post">
+        {% csrf_token %}
+        <div class="d-grid gap-2">
+          <button type="submit" class="btn btn-danger">Sí, eliminar</button>
+        </div>
+      </form>
+
+      <a
+        href="{% url 'noticias:detalle' pk=comentario.noticia.pk %}"
+        class="btn btn-secondary mt-2"
+      >
+        Cancelar
+      </a>
+    </div>
+  </div>
+</div>
 {% endblock contenido %}
