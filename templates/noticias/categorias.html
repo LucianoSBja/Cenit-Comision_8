@@ -1,20 +1,42 @@
-{% extends 'base.html' %}
-
-{% load static %}
-
-{% block titulo %}LISTADO DE CATEGORIAS{% endblock titulo %}
-
-{% block contenido %}
-{% for cate in object_list %}
-	{% if cate %}
-	<h2> {{ cate.nombre }}  </h2> <a href="{% url 'noticias:categoria_editar' pk=cate.pk %}">EDITAR</a> <a href="{% url 'noticias:categoria_borrar' pk=cate.pk %}">BORRAR</a>
-	
-	{% else %}
-	<h2> No hay categorias  </h2>
-	{% endif %}
-
-{% endfor %}
-<hr>
-<br><br><br>
-</h2> <a href="{% url 'noticias:categoria_crear' %}">CREAR</a>
+{% extends 'base.html' %} {% load static %} {% block titulo %}LISTADO DE
+CATEGORÍAS{% endblock titulo %} {% block contenido %}
+<div class="container mt-4">
+  {% if object_list %}
+  <table class="table">
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Nombre</th>
+        <th scope="col">Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for cate in object_list %}
+      <tr>
+        <th scope="row">{{ forloop.counter }}</th>
+        <td>{{ cate.nombre }}</td>
+        <td>
+          <a
+            href="{% url 'noticias:categoria_editar' pk=cate.pk %}"
+            class="btn btn-warning btn-sm"
+            >Editar</a
+          >
+          <a
+            href="{% url 'noticias:categoria_borrar' pk=cate.pk %}"
+            class="btn btn-danger btn-sm"
+            >Borrar</a
+          >
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% else %}
+  <p class="alert alert-info">No hay categorías.</p>
+  {% endif %}
+  <hr />
+  <a href="{% url 'noticias:categoria_crear' %}" class="btn btn-success"
+    >Crear Categoría</a
+  >
+</div>
 {% endblock contenido %}

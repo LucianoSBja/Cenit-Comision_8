@@ -1,14 +1,52 @@
-{% extends 'base.html' %}
-{% load static %}
+{% extends 'base.html' %} {% load static %} {% block titulo %}EDITAR CATEGORIA{%
+endblock titulo %} {% block contenido %}
+<h2>EDITANDO CATEGORIA {{ categoria.nombre }}</h2>
+<form method="post" enctype="multipart/form-data">
+  {% csrf_token %} {{ form.as_p }}
+  <button
+    type="button"
+    class="btn btn-danger"
+    data-bs-toggle="modal"
+    data-bs-target="#confirmarModal"
+  >
+    Eliminar
+  </button>
+  <button type="submit" class="btn btn-primary">Guardar cambios</button>
+</form>
 
-{% block titulo %}EDITAR CATEGORIA{% endblock titulo %}
-
-{% block contenido %}
-	<h2>EDITANDO CATEGORIA {{categoria.nombre }}</h2>
-	<form method="post" enctype="multipart/form-data">
-		{% csrf_token %}
-		{{ form.as_p }}
-		<button type="submit">Guardar cambios</button>
-	  </form>
-	  <a href="{% url 'noticias:categorias'%}">Cancelar</a>
+<!-- Modal -->
+<div
+  class="modal fade"
+  id="confirmarModal"
+  tabindex="-1"
+  aria-labelledby="confirmarModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="confirmarModalLabel">
+          Confirmar Eliminación
+        </h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <p>¿Estás seguro de que deseas eliminar "{{ categoria.nombre }}"?</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          Cancelar
+        </button>
+        <a href="{% url 'noticias:categorias'%}" class="btn btn-primary"
+          >Eliminar</a
+        >
+      </div>
+    </div>
+  </div>
+</div>
 {% endblock contenido %}

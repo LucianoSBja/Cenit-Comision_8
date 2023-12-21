@@ -1,20 +1,29 @@
-{% load static %}
-{% block title %}ACTUALIZACION DEL PERFIL{% endblock %}
-{% block contenido %}
-<main role="main">
+{% extends 'base.html' %} {% load static %} {% block contenido %}
+
+<main role="main" class="d-flex align-items-center justify-content-center mt-4">
   <div class="container">
-    <div class="row mt-3">
-      <div class="col-md-9 mx-auto mb-5">
-        <form action="" method="post">{% csrf_token %}         
-         <h3 class="mb-4">ACTUALIZACION DEL PERFIL</h3>
-          {{form.as_p}}
-          <p><input type="submit" class="btn btn-primary btn-block" value="Confirmar"></p>
+    <div class="row">
+      <div class="col-md-9">
+        <form
+          action=""
+          method="post"
+          class="needs-validation border p-4"
+          novalidate
+        >
+          {% csrf_token %}
+          <h3 class="mb-4">ACTUALIZACIÓN DEL PERFIL</h3>
+          {{ form.as_p }}
+          <div class="d-flex justify-content-between">
+            <button type="submit" class="btn btn-primary flex-grow-1 me-2">
+              Confirmar
+            </button>
+            <a href="{% url 'home' %}" class="btn btn-secondary flex-grow-1"
+              >Cancelar</a
+            >
+          </div>
         </form>
-        <a href="{% url 'home' %}">Cancelar</a>
-        
       </div>
     </div>
   </div>
 </main>
-
 {% endblock contenido %}
