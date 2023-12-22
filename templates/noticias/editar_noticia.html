@@ -1,14 +1,35 @@
-{% extends 'base.html' %}
-{% load static %}
+{% extends 'base.html' %} {% load static %} {% block contenido %}
+<div class="container border mt-4 mb-4 p-3">
+  <h2 class="mb-4">EDITANDO NOTICIA {{ noticia.titulo }}</h2>
+  <div class="row">
+    <div class="col-md-8">
+      <form method="post" enctype="multipart/form-data">
+        {% csrf_token %} {{ form.as_p }}
 
-{% block titulo %}EDITAR NOTICIA{% endblock titulo %}
+        <!-- Sección de imagen actual -->
+        {% if noticia.imagen %}
+        <div class="form-group border p-3 mb-3 text-center">
+          <h4 class="mb-3">Vista previa de la imagen actual:</h4>
+          <img
+            src="{{ noticia.imagen.url }}"
+            alt="Miniatura de la imagen"
+            class="img-thumbnail"
+            style="max-width: 200px; max-height: 200px"
+          />
+        </div>
+        {% endif %}
 
-{% block contenido %}
-	<h2>EDITANDO NOTICIA {{ noticia.titulo }}</h2>
-	<form method="post" enctype="multipart/form-data">
-		{% csrf_token %}
-		{{ form.as_p }}
-		<button type="submit">Guardar cambios</button>
-	  </form>
-	  <a href="{% url 'noticias:detalle' pk=noticia.pk %}">Cancelar</a>
+        <!-- Botones de acción -->
+        <div class="form-group">
+          <button type="submit" class="btn btn-primary">Guardar cambios</button>
+          <a
+            href="{% url 'noticias:detalle' pk=noticia.pk %}"
+            class="btn btn-secondary ml-2"
+            >Cancelar</a
+          >
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
 {% endblock contenido %}

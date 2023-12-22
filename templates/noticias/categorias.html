@@ -19,13 +19,22 @@ CATEGORÍAS{% endblock titulo %} {% block contenido %}
           <a
             href="{% url 'noticias:categoria_editar' pk=cate.pk %}"
             class="btn btn-warning btn-sm"
-            >Editar</a
           >
-          <a
-            href="{% url 'noticias:categoria_borrar' pk=cate.pk %}"
-            class="btn btn-danger btn-sm"
-            >Borrar</a
+            <i class="fas fa-edit"></i> Editar
+          </a>
+
+          <!-- Formulario de confirmación para borrar -->
+          <form
+            action="{% url 'noticias:categoria_borrar' pk=cate.pk %}"
+            method="post"
+            style="display: inline"
+            onsubmit="return confirmarBorrar('{{ cate.nombre }}');"
           >
+            {% csrf_token %}
+            <button type="submit" class="btn btn-danger btn-sm">
+              <i class="fas fa-trash-alt"></i> Borrar
+            </button>
+          </form>
         </td>
       </tr>
       {% endfor %}
@@ -35,8 +44,16 @@ CATEGORÍAS{% endblock titulo %} {% block contenido %}
   <p class="alert alert-info">No hay categorías.</p>
   {% endif %}
   <hr />
-  <a href="{% url 'noticias:categoria_crear' %}" class="btn btn-success"
-    >Crear Categoría</a
-  >
+  <a href="{% url 'noticias:categoria_crear' %}" class="btn btn-success">
+    <i class="fas fa-plus"></i> Crear Categoría
+  </a>
 </div>
+
+<script>
+  function confirmarBorrar(nombre) {
+    return confirm(
+      '¿Estás seguro de que deseas eliminar la categoría "' + nombre + '"?'
+    );
+  }
+</script>
 {% endblock contenido %}

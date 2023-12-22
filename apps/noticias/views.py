@@ -129,7 +129,7 @@ class Vw_Edita_Noticia(UpdateView):
 
 	def get_success_url(self):
       # Redirige a la vista de detalles de la publicación después de eliminar el comentario
-		return reverse_lazy('noticias:detalle', kwargs={'pk': self.object.noticia.pk})
+		return reverse_lazy('noticias:detalle', kwargs={'pk':  self.object.pk})
 
 @method_decorator(login_required, name='dispatch') #decorador que controla login en Vistas basadas en Clases
 class Vw_Borra_Noticia(DeleteView):

@@ -1,5 +1,4 @@
-{% extends 'base.html' %} {% load static %} {% block titulo %}EDITAR CATEGORIA{%
-endblock titulo %} {% block contenido %}
+{% extends 'base.html' %} {% load static %} {% block contenido %}
 <h2>EDITANDO CATEGORIA {{ categoria.nombre }}</h2>
 <form method="post" enctype="multipart/form-data">
   {% csrf_token %} {{ form.as_p }}
