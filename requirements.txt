@@ -1,12 +1,9 @@
 asgiref==3.7.2
 distlib==0.3.7
 Django==4.2.3
-filelock==3.13.0
 mysql==0.0.3
-mysqlclient==2.1.1
+mysqlclient==2.2.1
 Pillow==10.0.0
 platformdirs==3.11.0
 sqlparse==0.4.4
 tzdata==2023.3
-virtualenv==20.24.6
-virtualenvwrapper-win==1.2.7
