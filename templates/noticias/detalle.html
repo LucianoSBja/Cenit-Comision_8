@@ -10,15 +10,17 @@
       />
 
       <div class="metadata mb-4">
-        <p><strong>FECHA:</strong> {{ noticia.creado }}</p>
+
         <p><strong>CATEGORIA:</strong> {{ noticia.categoria_noticia }}</p>
+      
       </div>
 
       <p class="card-text">{{ noticia.cuerpo }}</p>
 
       <div class="card-footer">
-        <p><strong>Creado:</strong> {{ noticia.creado }}</p>
-        <p><strong>Editado:</strong> {{ noticia.modificado }}</p>
+        <p class="card-text">
+          <small class="text-muted">
+        Fecha de publicacion: {{ noticia.creado }}&emsp;&emsp;&emsp;Fecha de modificacion: {{ noticia.modificado }}</small></p>
 
         {% if user.is_staff %}
         <a
@@ -43,10 +45,11 @@
     <div class="comment card mb-2">
       <div class="card-body">
         <p class="card-text">
-          <strong>FECHA:</strong> {{ com.fecha }} - Modif {{ com.modificado }} -
-          <strong>Usuario:</strong> {{ com.usuario }}
-        </p>
-        <p class="card-text"><strong>- {{ com.texto }} -</strong></p>
+          <small class="text-muted">
+          Publicado: {{ com.fecha }} - Modificado: {{ com.modificado }} -
+          Usuario: {{ com.usuario }}
+          </small></p>
+        <p class="card-text">- {{ com.texto }} -</p>
 
         {% if user == com.usuario or user.is_staff %}
         <div class="btn-group">
@@ -79,7 +82,7 @@
           ></textarea>
         </div>
         <input type="text" name="id_noticia" value="{{ noticia.pk }}" hidden />
-        <button type="submit" class="btn btn-primary mt-3">
+        <button type="submit" class="btn btn-primary btn-sm mt-3">
           Guardar Comentario
         </button>
       </form>

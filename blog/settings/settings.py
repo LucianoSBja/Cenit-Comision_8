@@ -23,6 +23,17 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-&vznf9d1ub9b7!@ecs)&s+em1z%hwn9+nkqqvsge$+j%q$xf@k'
 
+DEBUG = True
+
+ALLOWED_HOSTS = ['flodsst.pythonanywhere.com']
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
+    }
+    }
+
 AUTH_USER_MODEL = 'usuarios.Usuario'
 
 LOGIN_REDIRECT_URL = reverse_lazy('home')

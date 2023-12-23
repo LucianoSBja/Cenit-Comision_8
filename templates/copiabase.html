@@ -1,0 +1,169 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <title>MI WEB | {% block titulo %}{% endblock titulo %}</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="{% static 'css/blog.css' %}" />
+    <link rel="icon" href="{% static 'favicon.ico' %}" type="image/x-icon" />
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-md bg-body-tertiary fixed-top">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="{% url 'home' %}">Blog IA - Grupo 7</a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNavDropdown"
+          aria-controls="navbarNavDropdown"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavDropdown">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'home' %}">Inicio</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'contacto:contacto' %}"
+                >Contacto</a
+              >
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'nosotros' %}">Nosotros</a>
+            </li>
+            <li class="nav-item dropdown">
+              <a
+                class="nav-link dropdown-toggle"
+                href="#"
+                role="button"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+                >Ordenar</a
+              >
+              <ul class="dropdown-menu">
+                <li>
+                  <a
+                    class="dropdown-item"
+                    href="{% url 'noticias:ordenoportitulo' %}"
+                    >A..Z Alfabetico</a
+                  >
+                </li>
+                <li>
+                  <a
+                    class="dropdown-item"
+                    href="{% url 'noticias:ordenoportitulo_des' %}"
+                    >Z..A Alfabetico</a
+                  >
+                </li>
+                <li>
+                  <a class="dropdown-item" href="{% url 'home' %}"
+                    >Más Reciente</a
+                  >
+                </li>
+                <li>
+                  <a
+                    class="dropdown-item"
+                    href="{% url 'noticias:ordenoporcreado' %}"
+                    >Más Antiguo</a
+                  >
+                </li>
+              </ul>
+            </li>
+            {% if user.is_authenticated and user.is_staff %}
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'noticias:categorias' %}"
+                >Editar Categorías</a
+              >
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'usuarios:listarusuarios' %}"
+                >Editar Usuarios</a
+              >
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'noticias:nueva' %}">Publicar</a>
+            </li>
+            {% endif %}
+          </ul>
+          {% if user.is_authenticated %}
+          <div class="d-flex align-items-center">
+            <strong class="bg-light me-2"
+              >Bienvenido {{ user.username }}</strong
+            >
+            <a
+              class="btn btn-outline-primary ms-2"
+              href="{% url 'usuarios:editaperfil' user.id %}"
+              >Editar Perfil</a
+            >
+            <a class="btn btn-outline-primary ms-2" href="{% url 'logout' %}"
+              >LOGOUT</a
+            >
+          </div>
+          {% else %}
+          <strong class="p-4 bg-light">Usuario Invitado</strong>
+          <a class="btn btn-outline-primary ms-2" href="{% url 'login' %}"
+            >LOGIN</a
+          >
+          <a
+            class="btn btn-outline-primary ms-2"
+            href="{% url 'usuarios:registro' %}"
+            >Registrar</a
+          >
+          {% endif %}
+        </div>
+      </div>
+    </nav>
+
+    <div class="container">
+      <main class="mt-5 pt-5">
+        <section class="row g-5">
+          <div class="col-md-8">
+            {% block contenido %}
+            <!-- TODAS LAS NOTICIAS -->
+            {% endblock %}
+          </div>
+          <!-- BARRA LATERAL DERECHA -->
+          <aside class="col-md-4">
+            <div class="position-sticky" style="top: 5rem">
+              <div class="p-4">
+                <h4 class="fst-italic">Categorías</h4>
+                <div class="list-group">
+                  {% for item in categorias %}
+                  <a
+                    href="{% url 'noticias:porcategoria' item.id %}"
+                    class="list-group-item list-group-item-action"
+                  >
+                    {{ item.nombre }}
+                  </a>
+                  {% endfor %}
+                </div>
+              </div>
+            </div>
+          </aside>
+        </section>
+      </main>
+
+     <footer class="blog-footer text-center mt-5 py-4">
+        <p class="mb-0">&copy; 2023 Blog IA - Grupo 7</p>
+    </footer>
+
+
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>

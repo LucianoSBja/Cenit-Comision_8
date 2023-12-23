@@ -1,5 +1,6 @@
 {% extends 'base.html' %} {% load static %} {% block contenido %}
 <div class="container" style="margin-top: 2rem">
+  <h2 class="mb-4">Últimas Noticias</h2>
 
   {% block lista_noticias %} {% for noti in object_list %}
   <div class="card mb-3" style="max-width: 740px;">
@@ -11,9 +12,9 @@
             <div class="card-body">
                 <strong class="d-block mb-2 text-primary">{{ noti.categoria_noticia }}</strong>
                 <h4 class="mb-0">{{ noti.titulo }}</h4>
-                <div class="mb-1 text-muted"><small class="text-muted">{{ noti.creado|date:"d M Y" }}</small></div>
+                <div class="mb-1 text-muted">{{ noti.creado|date:"d M Y" }}</div>
                 <p class="card-text mb-3 text-break">{{ noti.cuerpo|truncatewords:25 }}</p>
-                <a href="{% url 'noticias:detalle' noti.id %}" class="btn btn-primary btn-sm mt-4">Leer más</a>
+                <a href="{% url 'noticias:detalle' noti.id %}" class="btn btn-primary">Leer más</a>
             </div>
         </div>
     </div>

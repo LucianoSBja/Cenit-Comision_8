@@ -1,0 +1,21 @@
+{% extends 'base.html' %} {% block contenido %}
+<div class="container border m-2">
+  <h1 class="mt-5">NUEVA NOTICIA</h1>
+
+  <form
+    action="{% url 'noticias:nueva' %}"
+    method="post"
+    enctype="multipart/form-data"
+    class="needs-validation"
+    novalidate
+  >
+    {% csrf_token %}
+
+    <div class="row">{{ form.as_p }}</div>
+
+    <div class="d-flex justify-content-evenly mb-3">
+      <button type="submit" class="btn btn-primary">GRABAR</button>
+    </div>
+  </form>
+</div>
+{% endblock %}

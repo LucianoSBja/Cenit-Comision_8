@@ -16,7 +16,7 @@ titulo %} {% block contenido %} {% for noti in object_list %}
           >{{ noti.categoria_noticia }}</strong
         >
         <h4 class="mb-0">{{ noti.titulo }}</h4>
-        <div class="mb-1 text-muted">{{ noti.creado|date:"d M Y" }}</div>
+        <div class="mb-1 text-muted">Fecha de publicacion:{{ noti.creado|date:"d M Y" }}</div>
         <p class="card-text mb-auto">{{ noti.resumen }}</p>
         <a href="{% url 'noticias:detalle' noti.id %}" class="btn btn-primary"
           >Leer más</a

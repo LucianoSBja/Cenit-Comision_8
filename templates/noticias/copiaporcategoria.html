@@ -1,0 +1,38 @@
+{% extends 'base.html' %} {% load static %} {% block titulo %}LISTADO POR
+CATEGORIAS{% endblock titulo %} {% block contenido %}
+
+<div class="alert alert-success mt-4" role="alert">
+  Todos los Posts con la categoría: <strong>{{ categoria.nombre }}</strong>
+</div>
+
+{% for noti in noticias %}
+<div class="card mb-4">
+  <img
+    src="{{noti.imagen.url}}"
+    class="card-img-top figure-img img-fluid rounded"
+    alt="{{ noti.titulo }}"
+  />
+  <div class="card-body">
+    <h2 class="card-title">{{ noti.titulo }}</h2>
+    <p class="card-text">{{ noti.cuerpo }}</p>
+    <p class="card-text">
+      <small class="text-muted"
+        >Fecha de publicación: {{ noti.publicado }}</small
+      >
+    </p>
+    <a href="{% url 'noticias:detalle' noti.id %}" class="btn btn-primary"
+      >Leer más</a
+    >
+  </div>
+</div>
+{% empty %}
+<div class="alert alert-danger" role="alert">
+  <strong>No existen Posts con la categoría: {{ categoria.nombre }}</strong>
+</div>
+{% endfor %} {% if request.path != '/' %}
+<div class="my-3">
+  <a class="btn btn-success rounded-pill" href="{% url 'home' %}"
+    >Volver al Inicio</a
+  >
+</div>
+{% endif %} {% endblock contenido %}

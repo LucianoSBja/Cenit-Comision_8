@@ -1,0 +1,15 @@
+{% extends "base.html" %} {% block contenido %}
+<div class="container">
+  <h1>Confirmar Eliminación</h1>
+  <p class="alert-danger">
+    ¿Estás seguro de que deseas eliminar "{{ noticia.titulo }}"?
+  </p>
+  <form method="post">
+    {% csrf_token %}
+    <input type="submit" class="btn btn-danger" value="Sí, eliminar" />
+    <a class="btn btn-info" href="{% url 'noticias:detalle' pk=noticia.pk %}"
+      >Cancelar</a
+    >
+  </form>
+</div>
+{% endblock contenido %}

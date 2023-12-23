@@ -35,11 +35,6 @@
             <li class="nav-item">
               <a class="nav-link" href="{% url 'home' %}">Inicio</a>
             </li>
-            {% if user.is_authenticated and user.is_staff %}
-            <li class="nav-item">
-              <a class="nav-link" href="{% url 'noticias:nueva' %}">Publicar</a>
-            </li>
-            {% endif %}
             <li class="nav-item">
               <a class="nav-link" href="{% url 'contacto:contacto' %}"
                 >Contacto</a
@@ -86,6 +81,11 @@
                 </li>
               </ul>
             </li>
+            {% if user.is_authenticated %}
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'noticias:nueva' %}" font color="#9900FF">Publicar</a>
+            </li>
+            {% endif %}
             {% if user.is_authenticated and user.is_staff %}
             <li class="nav-item">
               <a class="nav-link" href="{% url 'noticias:categorias' %}"
